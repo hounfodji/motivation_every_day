@@ -42,45 +42,45 @@ https://templatemo.com/tm-551-stand-blog
 
     <!-- Header -->
     <header class="">
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg ">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+          <a class="navbar-brand" href="index.html"><h2>Meday<em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
+                <a class="nav-link" href="index.html">Accueil
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="about.html">About Us</a>
-              </li>
+              </li> --}}
               <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog Entries</a>
+                <a class="nav-link" href="blog.html">Autres histoires</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="post-details.html">Post Details</a>
-              </li>
-              <li class="nav-item">
+              </li> --}}
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
+              </li> --}}
               @if (Route::has('login'))
                 {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                        <a class="nav-link" href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                     </li>    
                     @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+                        <a class="nav-link" href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
                     </li>
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                            <a class="nav-link" href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                         </li>
                         @endif
                     @endauth
@@ -92,10 +92,15 @@ https://templatemo.com/tm-551-stand-blog
       </nav>
     </header>
 
+    
+
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="main-banner header-text">
       <div class="container-fluid">
+        {{-- <div class="alert alert-secondary" role="alert">
+          A simple secondary alert—check it out!
+        </div> --}}
         <div class="owl-banner owl-carousel">
           <div class="item">
             <img src="assets/images/banner-item-01.jpg" alt="">
@@ -198,7 +203,9 @@ https://templatemo.com/tm-551-stand-blog
     </div>
     <!-- Banner Ends Here -->
 
-    <section class="call-to-action">
+    
+
+    {{-- <section class="call-to-action">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -218,13 +225,13 @@ https://templatemo.com/tm-551-stand-blog
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
 
     <section class="blog-posts">
       <div class="container">
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col-lg-12">
             <div class="all-blog-posts">
               <div class="row">
                 <div class="col-lg-12">
@@ -262,7 +269,7 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                {{-- <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
                       <img src="assets/images/blog-post-02.jpg" alt="">
@@ -296,8 +303,8 @@ https://templatemo.com/tm-551-stand-blog
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-12">
+                </div> --}}
+                {{-- <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
                       <img src="assets/images/blog-post-03.jpg" alt="">
@@ -331,7 +338,7 @@ https://templatemo.com/tm-551-stand-blog
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
                 <div class="col-lg-12">
                   <div class="main-button">
                     <a href="blog.html">View All Posts</a>
@@ -340,7 +347,7 @@ https://templatemo.com/tm-551-stand-blog
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
+          {{-- <div class="col-lg-4">
             <div class="sidebar">
               <div class="row">
                 <div class="col-lg-12">
@@ -410,10 +417,12 @@ https://templatemo.com/tm-551-stand-blog
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </section>
+
+    
 
     
     <footer>
