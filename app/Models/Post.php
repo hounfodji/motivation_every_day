@@ -13,9 +13,10 @@ class Post extends Model
         
         'title', // Ajoutez 'title' ici pour permettre l'attribution de masse
         'detail',
-        'state',
+        //'state',
         'user_id',
-        
+        'image', // Ajout du champ image
+        'author', // Ajout du champ author
         // Autres colonnes si nécessaire
     ];
 

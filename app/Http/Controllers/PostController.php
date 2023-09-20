@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -33,20 +35,31 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => 'required|max:100',
             'detail' => 'required|max:500',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
         ]);
-        // Assume that you have the currently authenticated user.
-        $user = auth()->user(); // This assumes you have user authentication set up.
-        //dd(auth()->id);
+
+        // Gestion de l'image
+        if ($request->hasFile('image')) {
+
+            $imagePath = $request->file('image')->store('post_images', 'public');
+        } else {
+            $imagePath = null;
+        }
+
+        $user = Auth::user(); // Utilisateur actuellement authentifié
         $post = new Post([
             'title' => $request->title,
             'detail' => $request->detail,
-            // 'state' => false, // or true depending on the desired state
-            'user_id' => $user->id // Associez le post à l'utilisateur actuellement authentifié
+            // 'state' => false, // Vous pouvez définir l'état par défaut ici
+            'user_id' => $user->id,
+            'image' => $imagePath, // Enregistrez le chemin de l'image
+            'author' => $user->name, // Remplacez 'author' par le nom de l'auteur approprié
         ]);
-        //dd($user);
-        //dd($post);
+
         $post->save();
-        return back()->with('message', "Le post a bien été créé !");
+        // dd($post);
+        return redirect('/dashboard');
+        // return back()->with('message', "Le post a bien été créé !");
     }
 
     /**
@@ -74,11 +87,26 @@ class PostController extends Controller
             'title' => 'required|max:100',
             'detail' => 'required|max:500',
         ]);
+
+        // Gestion de l'image (mise à jour)
+        if ($request->hasFile('image')) {
+            // Supprimez l'ancienne image si elle existe
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+
+            $imagePath = $request->file('image')->store('post_images', 'public');
+        } else {
+            $imagePath = $post->image; // Conservez l'ancien chemin de l'image
+        }
+
         $post->title = $request->title;
         $post->detail = $request->detail;
-        $post->state = $request->has('state');
+        // $post->state = $request->has('state');
+        $post->image = $imagePath; // Mettez à jour le chemin de l'image
         $post->save();
-        return back()->with('message', "Le post a bien été modifié!! !");
+        return redirect('/dashboard');
+        //return back()->with('message', "Le post a bien été modifié !!");
     }
 
     /**

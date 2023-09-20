@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    {{-- <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg relative"> <!-- Notez l'ajout de "relative" -->
               <!-- Bouton Close -->
@@ -21,7 +21,7 @@
               </div>
           </div>
       </div>
-  </div>
+  </div> --}}
   
     
     @if(session('success'))
@@ -50,8 +50,8 @@
                         <tr>
                           <th class="px-2 py-2 text-xs text-gray-500">#</th>
                           <th class="px-2 py-2 text-xs text-gray-500">@lang('Title')</th>
-                          <th class="px-2 py-2 text-xs text-gray-500">Etat</th>
-                          <th class="px-2 py-2 text-xs text-gray-500"></th>
+                          <th class="px-2 py-2 text-xs text-gray-500">Image</th>
+                          <th class="px-2 py-2 text-xs text-gray-500">Actions</th>
                           <th class="px-2 py-2 text-xs text-gray-500"></th>
                           <th class="px-2 py-2 text-xs text-gray-500"></th>
                         </tr>
@@ -61,7 +61,14 @@
                           <tr class="whitespace-nowrap">
                             <td class="px-4 py-4 text-sm text-gray-500">{{ $post->id }}</td>
                             <td class="px-4 py-4">{{ $post->title }}</td>
-                            <td class="px-4 py-4">@if($post->state) {{ __('Done') }} @else {{ __('To do') }} @endif</td>
+                            {{-- <td class="px-4 py-4">@if($post->state) {{ __('Done') }} @else {{ __('To do') }} @endif</td> --}}
+                            <td class="px-4 py-4">
+                                @if($post->image)
+                                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-12 h-12 object-cover rounded-full">
+                                @else
+                                    <span class="text-gray-400">Aucune image</span>
+                                @endif
+                            </td>
                             <x-link-button href="{{ route('posts.show', $post->id) }}">
                                 @lang('Show')
                             </x-link-button>

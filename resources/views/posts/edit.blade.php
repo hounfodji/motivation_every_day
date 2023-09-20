@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('posts.update', $post->id) }}" method="post">
+        <form action="{{ route('posts.update', $post->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('put')
 
@@ -37,11 +37,20 @@
             </div>
 
             <!-- Tâche accomplie -->
-            <div class="block mt-4">
+            {{-- <div class="block mt-4">
                 <label for="state" class="inline-flex items-center">
                     <input id="state" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="state" @if(old('state', $post->state)) checked @endif>
                     <span class="ml-2 text-sm text-gray-600">{{ __('post done') }}</span>
                 </label>
+            </div> --}}
+
+            <!-- Champ d'entrée pour l'image -->
+            <div class="mt-4">
+                <x-input-label for="image" :value="__('Image')" />
+
+                <input id="image" type="file" class="block mt-1 w-full" name="image" accept="image/*">
+                
+                <x-input-error :messages="$errors->get('image')" class="mt-2" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
