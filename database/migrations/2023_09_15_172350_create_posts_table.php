@@ -19,6 +19,7 @@ return new class extends Migration
            // $table->boolean('state')->default(false);
             $table->string('image'); // Ajout du champ image
             $table->string('author'); // Ajout du champ author
+            $table->string('username'); // Ajout du champ username
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

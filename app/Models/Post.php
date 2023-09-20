@@ -17,6 +17,7 @@ class Post extends Model
         'user_id',
         'image', // Ajout du champ image
         'author', // Ajout du champ author
+        'username', // Ajout du champ username
         // Autres colonnes si nécessaire
     ];
 

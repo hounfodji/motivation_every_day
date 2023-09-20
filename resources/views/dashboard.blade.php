@@ -50,6 +50,7 @@
                         <tr>
                           <th class="px-2 py-2 text-xs text-gray-500">#</th>
                           <th class="px-2 py-2 text-xs text-gray-500">@lang('Title')</th>
+                          <th class="px-2 py-2 text-xs text-gray-500">@lang('Author')</th>
                           <th class="px-2 py-2 text-xs text-gray-500">Image</th>
                           <th class="px-2 py-2 text-xs text-gray-500">Actions</th>
                           <th class="px-2 py-2 text-xs text-gray-500"></th>
@@ -61,6 +62,7 @@
                           <tr class="whitespace-nowrap">
                             <td class="px-4 py-4 text-sm text-gray-500">{{ $post->id }}</td>
                             <td class="px-4 py-4">{{ $post->title }}</td>
+                            <td class="px-4 py-4">{{ $post->author }}</td>
                             {{-- <td class="px-4 py-4">@if($post->state) {{ __('Done') }} @else {{ __('To do') }} @endif</td> --}}
                             <td class="px-4 py-4">
                                 @if($post->image)

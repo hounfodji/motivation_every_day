@@ -35,6 +35,15 @@
                 <x-input-error :messages="$errors->get('detail')" class="mt-2" />
             </div>
 
+            <!-- Author -->
+            <div class="mt-4">
+                <x-input-label for="author" :value="__('Author')" />
+
+                <x-textarea class="block mt-1 w-full" id="author" name="author">{{ old('author') }}</x-textarea>
+
+                <x-input-error :messages="$errors->get('author')" class="mt-2" />
+            </div>
+
             <!-- Champ d'image -->
             <div class="mt-4">
                 <x-input-label for="image" :value="__('Image')" />

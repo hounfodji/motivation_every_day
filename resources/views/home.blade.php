@@ -102,23 +102,73 @@ https://templatemo.com/tm-551-stand-blog
           A simple secondary alert—check it out!
         </div> --}}
         <div class="owl-banner owl-carousel">
-          <div class="item">
-            <img src="assets/images/banner-item-01.jpg" alt="">
-            <div class="item-content">
-              <div class="main-content">
-                <div class="meta-category">
-                  <span>Fashion</span>
+
+          @foreach ($posts as $post)
+
+            {{-- <div class="item">
+              <div class="card" style="width: 18rem;">
+                @if($post->image)
+                  <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="card-img-top">
+                @else
+                    <span class="text-gray-400">Aucune image</span>
+                @endif
+                <div class="card-body">
+                  <h5 class="card-title">{{ $post->detail }}</h5>
+                  <p class="card-text">{{ $post->author }} in {{ $post->title }}</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
-                <a href="post-details.html"><h4>Morbi dapibus condimentum</h4></a>
-                <ul class="post-info">
-                  <li><a href="#">Admin</a></li>
-                  <li><a href="#">May 12, 2020</a></li>
-                  <li><a href="#">12 Comments</a></li>
-                </ul>
+              </div>
+
+            </div> --}}
+
+
+            {{-- <div class="item">
+              <div class="card" style="width: 18rem;">
+                @if($post->image)
+                  <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="card-img-top">
+                @else
+                    <span class="text-gray-400">Aucune image</span>
+                @endif
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>{{ $post->detail }}</p>
+                    <footer class="blockquote-footer">{{ $post->author }} <cite title="Source Title">{{ $post->title }}</cite></footer>
+                  </blockquote>
+                  <a href="#" class="btn btn-primary">Learn more</a>
+                </div>
+              </div>
+            </div> --}}
+            
+            
+          
+          
+            <div class="item">
+              @if($post->image)
+                  <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-12 h-12 object-cover rounded-full">
+              @else
+                  <span class="text-gray-400">Aucune image</span>
+              @endif
+              <div class="item-content">
+                <div class="main-content">
+                  <h4>{{ $post->detail }}</h4>
+                  <p class="fst-italic" style="color: #f48840">{{ $post->author }} in {{ $post->title }} .</p>
+                  
+                  {{-- <div class="meta-category">
+                    <span>{{ $post->author }} in {{ $post->title }}</span>
+                  </div>
+                  <ul class="post-info">
+                    <li><a href="#">{{ $post->author }}</a></li>
+                    <li><a href="#">{{ $post->created_at }}</a></li>
+                    <li><a href="#">12 Comments</a></li>
+                  </ul> --}}
+                </div>
               </div>
             </div>
-          </div>
-          <div class="item">
+          @endforeach
+
+
+          
+          {{-- <div class="item">
             <img src="assets/images/banner-item-02.jpg" alt="">
             <div class="item-content">
               <div class="main-content">
@@ -197,7 +247,7 @@ https://templatemo.com/tm-551-stand-blog
                 </ul>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>

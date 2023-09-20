@@ -34,6 +34,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|max:100',
+            'author' => 'required|max:100',
             'detail' => 'required|max:500',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
         ]);
@@ -50,10 +51,11 @@ class PostController extends Controller
         $post = new Post([
             'title' => $request->title,
             'detail' => $request->detail,
+            'author' => $request->author,
             // 'state' => false, // Vous pouvez définir l'état par défaut ici
             'user_id' => $user->id,
             'image' => $imagePath, // Enregistrez le chemin de l'image
-            'author' => $user->name, // Remplacez 'author' par le nom de l'auteur approprié
+            'username' => $user->name, // Remplacez 'author' par le nom de l'auteur approprié
         ]);
 
         $post->save();
@@ -85,6 +87,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|max:100',
+            'author' => 'required|max:100',
             'detail' => 'required|max:500',
         ]);
 
@@ -102,6 +105,7 @@ class PostController extends Controller
 
         $post->title = $request->title;
         $post->detail = $request->detail;
+        $post->author = $request->author;
         // $post->state = $request->has('state');
         $post->image = $imagePath; // Mettez à jour le chemin de l'image
         $post->save();
