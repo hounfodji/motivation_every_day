@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('title');
+            $table->text('detail');
+           // $table->boolean('state')->default(false);
+            $table->string('image'); // Ajout du champ image
+            $table->string('author'); // Ajout du champ author
+            $table->string('username'); // Ajout du champ username
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -23,5 +32,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('histories');
+        Schema::table('histories', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
     }
 };

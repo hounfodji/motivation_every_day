@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -24,6 +25,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', [HistoryController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,5 +39,6 @@ Auth::routes([
 
  
 Route::resource('posts', PostController::class)->middleware('auth');
+Route::resource('histories', HistoryController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';

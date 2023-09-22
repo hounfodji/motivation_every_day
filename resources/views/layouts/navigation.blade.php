@@ -23,11 +23,11 @@
                     </x-nav-link>
                 </div>
 
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('posts.create-history')" :active="request()->routeIs('posts.create-history')">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('histories.create')" :active="request()->routeIs('histories.create')">
                         {{ __('Create a history') }}
                     </x-nav-link>
-                </div> --}}
+                </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $histories = History::all();
         //dd($posts);
-        return view('dashboard', compact('posts'));
+        return view('dashboard', compact('posts', 'histories'));
     }
 
     /**

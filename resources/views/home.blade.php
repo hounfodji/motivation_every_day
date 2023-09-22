@@ -44,14 +44,14 @@ https://templatemo.com/tm-551-stand-blog
     <header class="">
       <nav class="navbar navbar-expand-lg ">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Meday<em>.</em></h2></a>
+          <a class="navbar-brand" href="{{ url('/') }}"><h2>Meday<em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Accueil
+                <a class="nav-link" href="{{ url('/') }}">Accueil
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
@@ -139,9 +139,6 @@ https://templatemo.com/tm-551-stand-blog
               </div>
             </div> --}}
             
-            
-          
-          
             <div class="item">
               @if($post->image)
                   <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-12 h-12 object-cover rounded-full">
@@ -278,6 +275,7 @@ https://templatemo.com/tm-551-stand-blog
     </section> --}}
 
 
+    @if($history != null)
     <section class="blog-posts">
       <div class="container">
         <div class="row">
@@ -287,17 +285,21 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="col-lg-12">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      <img src="assets/images/blog-post-01.jpg" alt="">
+                      @if($history->image)
+                          <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}" class="w-12 h-12 object-cover rounded-full">
+                      @else
+                          <span class="text-gray-400">Aucune image</span>
+                      @endif
                     </div>
                     <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="post-details.html"><h4>Best Template Website for HTML CSS</h4></a>
+                      <span>{{ $history->title }}</span>
+                      {{-- <a href="post-details.html"><h4>Best Template Website for HTML CSS</h4></a> --}}
                       <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 31, 2020</a></li>
+                        <li><a href="#">{{ $history->username }}</a></li>
+                        <li><a href="#">{{ $history->created_at }}</a></li>
                         <li><a href="#">12 Comments</a></li>
                       </ul>
-                      <p>Stand Blog is a free HTML CSS template for your CMS theme. You can easily adapt or customize it for any kind of CMS or website builder. You are allowed to use it for your business. You are NOT allowed to re-distribute the template ZIP file on any template collection site for the download purpose. <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
+                      <p>{{ $history->detail }} <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
                       <div class="post-options">
                         <div class="row">
                           <div class="col-6">
@@ -471,6 +473,12 @@ https://templatemo.com/tm-551-stand-blog
         </div>
       </div>
     </section>
+    @else
+        <span class="text-gray-400">No history</span>
+    @endif
+
+
+    
 
     
 
