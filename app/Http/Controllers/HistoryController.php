@@ -6,7 +6,7 @@ use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Image;
 class HistoryController extends Controller
 {
     /**
@@ -39,13 +39,25 @@ class HistoryController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
         ]);
 
-        // Gestion de l'image
-        if ($request->hasFile('image')) {
+         // Gestion de l'image
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('history_images', 'public');
 
-            $imagePath = $request->file('image')->store('history_images', 'public');
-        } else {
-            $imagePath = null;
-        }
+        // Chemin complet de l'image téléchargée
+        $imageFullPath = storage_path('app/public/' . $imagePath);
+
+        // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
+        $image = Image::make($imageFullPath)->fit(1110, 500, function ($constraint) {
+            $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
+        });
+
+        // Sauvegardez l'image redimensionnée et compressée
+        $image->save($imageFullPath);
+    } else {
+        $imagePath = null;
+    }
+
+
 
         $user = Auth::user(); // Utilisateur actuellement authentifié
         $history = new History([
@@ -99,7 +111,19 @@ class HistoryController extends Controller
             }
 
             $imagePath = $request->file('image')->store('history_images', 'public');
-        } else {
+    
+            // Chemin complet de l'image téléchargée
+            $imageFullPath = storage_path('app/public/' . $imagePath);
+    
+            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
+            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
+            });
+    
+            // Sauvegardez l'image redimensionnée et compressée
+            $image->save($imageFullPath);
+        } 
+        else {
             $imagePath = $history->image; // Conservez l'ancien chemin de l'image
         }
 

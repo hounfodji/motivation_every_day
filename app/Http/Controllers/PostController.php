@@ -7,7 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Image;
 class PostController extends Controller
 {
     /**
@@ -42,12 +42,32 @@ class PostController extends Controller
         ]);
 
         // Gestion de l'image
-        if ($request->hasFile('image')) {
+        // if ($request->hasFile('image')) {
 
-            $imagePath = $request->file('image')->store('post_images', 'public');
-        } else {
-            $imagePath = null;
-        }
+        //     $imagePath = $request->file('image')->store('post_images', 'public');
+        // } else {
+        //     $imagePath = null;
+        // }
+
+         // Gestion de l'image
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('post_images', 'public');
+
+        // Chemin complet de l'image téléchargée
+        $imageFullPath = storage_path('app/public/' . $imagePath);
+
+        // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
+        $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
+            $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
+        });
+
+        // Sauvegardez l'image redimensionnée et compressée
+        $image->save($imageFullPath);
+    } else {
+        $imagePath = null;
+    }
+
+
 
         $user = Auth::user(); // Utilisateur actuellement authentifié
         $post = new Post([
@@ -94,6 +114,14 @@ class PostController extends Controller
         ]);
 
         // Gestion de l'image (mise à jour)
+        // if ($request->hasFile('image')) {
+            // // Supprimez l'ancienne image si elle existe
+            // if ($post->image) {
+            //     Storage::disk('public')->delete($post->image);
+            // }
+
+        //     $imagePath = $request->file('image')->store('post_images', 'public');
+        // } 
         if ($request->hasFile('image')) {
             // Supprimez l'ancienne image si elle existe
             if ($post->image) {
@@ -101,7 +129,19 @@ class PostController extends Controller
             }
 
             $imagePath = $request->file('image')->store('post_images', 'public');
-        } else {
+    
+            // Chemin complet de l'image téléchargée
+            $imageFullPath = storage_path('app/public/' . $imagePath);
+    
+            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
+            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
+            });
+    
+            // Sauvegardez l'image redimensionnée et compressée
+            $image->save($imageFullPath);
+        } 
+        else {
             $imagePath = $post->image; // Conservez l'ancien chemin de l'image
         }
 
