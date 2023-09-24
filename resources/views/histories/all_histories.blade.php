@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="TemplateMo">
+    <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
 
     <title>Meday</title>
@@ -31,112 +31,66 @@ https://templatemo.com/tm-551-stand-blog
   <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
+    {{-- <div id="preloader">
         <div class="jumper">
             <div></div>
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>   --}}
     <!-- ***** Preloader End ***** -->
 
     <!-- Header -->
     <header class="">
-      <nav class="navbar navbar-expand-lg ">
+      <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="{{ url('/') }}"><h2>Meday<em>.</em></h2></a>
+          <a class="navbar-brand" href="index.html"><h2>Meday<em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url('/') }}">Accueil
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('/') }}">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
               {{-- <li class="nav-item">
                 <a class="nav-link" href="about.html">About Us</a>
-              </li> --}}
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url('/histories') }}">Autres histoires</a>
               </li>
-              {{-- <li class="nav-item">
+              <li class="nav-item active">
+                <a class="nav-link" href="blog.html">Blog Entries</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="post-details.html">Post Details</a>
               </li> --}}
-              {{-- <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li> --}}
-              @if (Route::has('login'))
-                {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                    </li>    
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-                    </li>
-
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        </li>
-                        @endif
-                    @endauth
-                {{-- </div> --}}
-            @endif
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
     </header>
 
-    
-
     <!-- Page Content -->
     <!-- Banner Starts Here -->
-    <div class="main-banner header-text">
-      <div class="container-fluid">
-        {{-- <div class="alert alert-secondary" role="alert">
-          A simple secondary alert—check it out!
-        </div> --}}
-        <div class="owl-banner owl-carousel">
-
-          @foreach ($posts as $post)
-
-           
-            
-            <div class="item">
-              @if($post->image)
-                  <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-12 h-12 object-cover rounded-full">
-              @else
-                  <span class="text-gray-400">Aucune image</span>
-              @endif
-              <div class="item-content">
-                <div class="main-content">
-                  <h4>{{ $post->detail }}</h4>
-                  <p class="fst-italic" style="color: #f48840">{{ $post->author }} in {{ $post->title }} .</p>
-                  
-                  {{-- <div class="meta-category">
-                    <span>{{ $post->author }} in {{ $post->title }}</span>
-                  </div>
-                  <ul class="post-info">
-                    <li><a href="#">{{ $post->author }}</a></li>
-                    <li><a href="#">{{ $post->created_at }}</a></li>
-                    <li><a href="#">12 Comments</a></li>
-                  </ul> --}}
-                </div>
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Motivation every day.</h4>
+                <h2>Read these stories to stay motivated and determined !</h2>
               </div>
             </div>
-          @endforeach
-
+          </div>
         </div>
-      </div>
+      </section>
     </div>
-    <!-- Banner Ends Here -->
-
     
+    <!-- Banner Ends Here -->
 
     {{-- <section class="call-to-action">
       <div class="container">
@@ -145,12 +99,12 @@ https://templatemo.com/tm-551-stand-blog
             <div class="main-content">
               <div class="row">
                 <div class="col-lg-8">
-                  <span>Stand Blog HTML5 Template</span>
-                  <h4>Creative HTML Template For Bloggers!</h4>
+                  <span>Motivation every day.</span>
+                  <h4>Read these stories to stay motivated and determined!</h4>
                 </div>
                 <div class="col-lg-4">
                   <div class="main-button">
-                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
+                    <a href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
                   </div>
                 </div>
               </div>
@@ -160,136 +114,180 @@ https://templatemo.com/tm-551-stand-blog
       </div>
     </section> --}}
 
-    <section class="call-to-action">
+
+    <section class="blog-posts grid-system">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
-            <div class="main-content">
-              <div class="row">
-                <div class="col-lg-8">
-                  <span>Motivation Every Day</span>
-                  <h4>History of the day!</h4>
-                </div>
-                {{-- <div class="col-lg-4">
-                  <div class="main-button">
-                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
-                  </div>
-                </div> --}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    @if($history != null)
-    <section class="blog-posts">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-8">
             <div class="all-blog-posts">
               <div class="row">
-                <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      @if($history->image)
+                @foreach ($histories as $history)
+                  <div class="col-lg-6">
+                    <div class="blog-post">
+                      <div class="blog-thumb">
+                        @if($history->image)
                           <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}" class="w-12 h-12 object-cover rounded-full">
-                      @else
-                          <span class="text-gray-400">Aucune image</span>
-                      @endif
-                    </div>
-                    <div class="down-content">
-                      <span>{{ $history->title }}</span>
-                      {{-- <a href="post-details.html"><h4>Best Template Website for HTML CSS</h4></a> --}}
-                      <ul class="post-info">
-                        <li><a href="#">{{ $history->username }}</a></li>
-                        <li><a href="#">{{ $history->created_at }}</a></li>
-                        <li><a href="#">12 Comments</a></li>
-                      </ul>
-                      <p>{{ $history->detail }} <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Beauty</a>,</li>
-                              <li><a href="#">Nature</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#"> Twitter</a></li>
-                            </ul>
+                        @else
+                            <span class="text-gray-400">Aucune image</span>
+                        @endif
+                      </div>
+                      <div class="down-content">
+                        <span>{{ $history->title }}</span>
+                        {{-- <a href="post-details.html"><h4>{{ $history->detail }}</h4></a> --}}
+                        <ul class="post-info">
+                          <li><a href="#">{{ $history->username }}</a></li>
+                          <li><a href="#">{{ $history->created_at }}</a></li>
+                          <li><a href="#">12 Comments</a></li>
+                        </ul>
+                        <p>{{ $history->detail }}.</p>
+                        <div class="post-options">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <ul class="post-tags">
+                                <li><i class="fa fa-tags"></i></li>
+                                <li><a href="#">Read More.</a>,</li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                {{-- <div class="col-lg-12">
+                    
+                @endforeach
+                {{-- <div class="col-lg-6">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      <img src="assets/images/blog-post-02.jpg" alt="">
+                      <img src="assets/images/blog-thumb-02.jpg" alt="">
                     </div>
                     <div class="down-content">
-                      <span>Healthy</span>
-                      <a href="post-details.html"><h4>Etiam id diam vitae lorem dictum</h4></a>
+                      <span>Lifestyle</span>
+                      <a href="post-details.html"><h4>Suspendisse et metus</h4></a>
                       <ul class="post-info">
                         <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 24, 2020</a></li>
-                        <li><a href="#">36 Comments</a></li>
+                        <li><a href="#">May 22, 2020</a></li>
+                        <li><a href="#">26 Comments</a></li>
                       </ul>
-                      <p>You can support us by contributing a little via PayPal. Please contact <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">TemplateMo</a> via Live Chat or Email. If you have any question or feedback about this template, feel free to talk to us. Also, you may check other CSS templates such as <a rel="nofollow" href="https://templatemo.com/tag/multi-page" target="_parent">multi-page</a>, <a rel="nofollow" href="https://templatemo.com/tag/resume" target="_parent">resume</a>, <a rel="nofollow" href="https://templatemo.com/tag/video" target="_parent">video</a>, etc.</p>
+                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
                       <div class="post-options">
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-lg-12">
                             <ul class="post-tags">
                               <li><i class="fa fa-tags"></i></li>
                               <li><a href="#">Best Templates</a>,</li>
                               <li><a href="#">TemplateMo</a></li>
                             </ul>
                           </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="assets/images/blog-thumb-03.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                      <span>Lifestyle</span>
+                      <a href="post-details.html"><h4>Donec tincidunt leo</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">May 18, 2020</a></li>
+                        <li><a href="#">42 Comments</a></li>
+                      </ul>
+                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              <li><a href="#">Best Templates</a>,</li>
+                              <li><a href="#">TemplateMo</a></li>
                             </ul>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div> --}}
-                {{-- <div class="col-lg-12">
+                </div>
+                <div class="col-lg-6">
                   <div class="blog-post">
                     <div class="blog-thumb">
-                      <img src="assets/images/blog-post-03.jpg" alt="">
+                      <img src="assets/images/blog-thumb-04.jpg" alt="">
                     </div>
                     <div class="down-content">
-                      <span>Fashion</span>
-                      <a href="post-details.html"><h4>Donec tincidunt leo nec magna</h4></a>
+                      <span>Lifestyle</span>
+                      <a href="post-details.html"><h4>Mauris ac dolor ornare</h4></a>
                       <ul class="post-info">
                         <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 14, 2020</a></li>
-                        <li><a href="#">48 Comments</a></li>
+                        <li><a href="#">May 16, 2020</a></li>
+                        <li><a href="#">28 Comments</a></li>
                       </ul>
-                      <p>Nullam at quam ut lacus aliquam tempor vel sed ipsum. Donec pellentesque tincidunt imperdiet. Mauris sit amet justo vulputate, cursus massa congue, vestibulum odio. Aenean elit nunc, gravida in erat sit amet, feugiat viverra leo. Phasellus interdum, diam commodo egestas rhoncus, turpis nisi consectetur nibh, in vehicula eros orci vel neque.</p>
+                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
                       <div class="post-options">
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-lg-12">
                             <ul class="post-tags">
                               <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">HTML CSS</a>,</li>
-                              <li><a href="#">Photoshop</a></li>
+                              <li><a href="#">Best Templates</a>,</li>
+                              <li><a href="#">TemplateMo</a></li>
                             </ul>
                           </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="assets/images/blog-thumb-05.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                      <span>Lifestyle</span>
+                      <a href="post-details.html"><h4>Donec tincidunt leo</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">May 12, 2020</a></li>
+                        <li><a href="#">16 Comments</a></li>
+                      </ul>
+                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              <li><a href="#">Best Templates</a>,</li>
+                              <li><a href="#">TemplateMo</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="assets/images/blog-thumb-06.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                      <span>Lifestyle</span>
+                      <a href="post-details.html"><h4>Mauris ac dolor ornare</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">Admin</a></li>
+                        <li><a href="#">May 10, 2020</a></li>
+                        <li><a href="#">3 Comments</a></li>
+                      </ul>
+                      <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              <li><a href="#">Best Templates</a>,</li>
+                              <li><a href="#">TemplateMo</a></li>
                             </ul>
                           </div>
                         </div>
@@ -298,14 +296,17 @@ https://templatemo.com/tm-551-stand-blog
                   </div>
                 </div> --}}
                 <div class="col-lg-12">
-                  <div class="main-button">
-                    <a href="blog.html">View All Posts</a>
-                  </div>
+                  <ul class="page-numbers">
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          {{-- <div class="col-lg-4">
+          <div class="col-lg-4">
             <div class="sidebar">
               <div class="row">
                 <div class="col-lg-12">
@@ -375,18 +376,10 @@ https://templatemo.com/tm-551-stand-blog
                 </div>
               </div>
             </div>
-          </div> --}}
+          </div>
         </div>
       </div>
     </section>
-    @else
-        <span class="text-gray-400">No history</span>
-    @endif
-
-
-    
-
-    
 
     
     <footer>
@@ -411,6 +404,7 @@ https://templatemo.com/tm-551-stand-blog
         </div>
       </div>
     </footer>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

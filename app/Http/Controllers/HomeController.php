@@ -10,8 +10,7 @@ class HomeController extends Controller
 {
     public function home() {
         $posts = Post::all();
-        $history = History::inRandomOrder()->first(); //Prendre un post de manière aléatoire
-        // dd($history);
+        $history = History::latest()->first(); // Récupérer la dernière histoire créée
         return view('home', compact("posts", "history"));
     }
 }

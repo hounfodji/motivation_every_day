@@ -14,9 +14,9 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        // $histories = History::all();
-        // // dd($histories);
-        // return view('dashboard', compact('histories'));
+        $histories = History::all();
+        // dd($histories);
+        return view('histories.all_histories', compact('histories'));
     }
 
     /**
@@ -47,7 +47,7 @@ class HistoryController extends Controller
         $imageFullPath = storage_path('app/public/' . $imagePath);
 
         // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-        $image = Image::make($imageFullPath)->fit(1110, 500, function ($constraint) {
+        $image = Image::make($imageFullPath)->fit(1110, 600, function ($constraint) {
             $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
         });
 
@@ -116,7 +116,7 @@ class HistoryController extends Controller
             $imageFullPath = storage_path('app/public/' . $imagePath);
     
             // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
+            $image = Image::make($imageFullPath)->fit(1110, 600, function ($constraint) {
                 $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
             });
     

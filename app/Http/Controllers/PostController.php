@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
+
 class PostController extends Controller
 {
     /**
@@ -15,9 +16,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        $histories = History::all();
-        //dd($posts);
+        // Récupérer l'utilisateur connecté
+        $user = auth()->user();
+
+        // Sélectionner les posts de l'utilisateur connecté
+        $posts = Post::where('user_id', $user->id)->paginate(5); // 5 éléments par page
+
+        // Sélectionner les histoires de l'utilisateur connecté
+        $histories = History::where('user_id', $user->id)->paginate(5); // 5 éléments par page
+
         return view('dashboard', compact('posts', 'histories'));
     }
 
@@ -49,23 +56,23 @@ class PostController extends Controller
         //     $imagePath = null;
         // }
 
-         // Gestion de l'image
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('post_images', 'public');
+        // Gestion de l'image
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('post_images', 'public');
 
-        // Chemin complet de l'image téléchargée
-        $imageFullPath = storage_path('app/public/' . $imagePath);
+            // Chemin complet de l'image téléchargée
+            $imageFullPath = storage_path('app/public/' . $imagePath);
 
-        // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-        $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
-            $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
-        });
+            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
+            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
+            });
 
-        // Sauvegardez l'image redimensionnée et compressée
-        $image->save($imageFullPath);
-    } else {
-        $imagePath = null;
-    }
+            // Sauvegardez l'image redimensionnée et compressée
+            $image->save($imageFullPath);
+        } else {
+            $imagePath = null;
+        }
 
 
 
@@ -115,10 +122,10 @@ class PostController extends Controller
 
         // Gestion de l'image (mise à jour)
         // if ($request->hasFile('image')) {
-            // // Supprimez l'ancienne image si elle existe
-            // if ($post->image) {
-            //     Storage::disk('public')->delete($post->image);
-            // }
+        // // Supprimez l'ancienne image si elle existe
+        // if ($post->image) {
+        //     Storage::disk('public')->delete($post->image);
+        // }
 
         //     $imagePath = $request->file('image')->store('post_images', 'public');
         // } 
@@ -129,19 +136,18 @@ class PostController extends Controller
             }
 
             $imagePath = $request->file('image')->store('post_images', 'public');
-    
+
             // Chemin complet de l'image téléchargée
             $imageFullPath = storage_path('app/public/' . $imagePath);
-    
+
             // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
             $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
                 $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
             });
-    
+
             // Sauvegardez l'image redimensionnée et compressée
             $image->save($imageFullPath);
-        } 
-        else {
+        } else {
             $imagePath = $post->image; // Conservez l'ancien chemin de l'image
         }
 
