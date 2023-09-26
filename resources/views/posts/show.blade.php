@@ -16,8 +16,11 @@
                     <h3 class="text-2xl font-semibold text-gray-800 mb-4">@lang('Title')</h3>
                     <p class="text-lg text-gray-700">{{ $post->title }}</p>
 
-                    <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Detail')</h3>
-                    <p class="text-lg text-gray-700">{{ $post->detail }}</p>
+                    <div style="overflow: auto">
+
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Detail')</h3>
+                        <p class="text-lg text-gray-700">{{ $post->detail }}</p>
+                    </div>
 
                     {{-- <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('State')</h3>
                     <p class="text-lg text-gray-700">

@@ -236,10 +236,10 @@ https://templatemo.com/tm-551-stand-blog
             <div class="container">
 
                 <div class="card" style="width: 100%">
-                    <div class="col-4">
+                    <div class="col-5">
 
-                        @if ($history->image)
-                            <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}"
+                        @if ($history->image_compressed)
+                            <img src="{{ asset('storage/' . $history->image_compressed) }}" alt="{{ $history->title }}"
                                 class="mt-5 rounded mx-auto d-block">
                         @else
                             <span class="text-gray-400">Aucune image</span>
@@ -257,7 +257,7 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                 </div>
               
-                <div class="mt-5 mx-auto col-9">
+                <div class="mt-5 mx-auto col-7">
                     <div class="main-button">
                         <a href="{{ url('/histories') }}">View All Posts</a>
                     </div>

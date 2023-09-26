@@ -16,10 +16,12 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->text('detail');
-           // $table->boolean('state')->default(false);
-            $table->string('image'); // Ajout du champ image
             $table->string('author'); // Ajout du champ author
-            $table->string('username'); // Ajout du champ username
+           // $table->boolean('state')->default(false);
+           $table->string('image_real'); // Ajout du champ pour l'image réelle
+           $table->string('image_compressed'); // Ajout du champ pour l'image compressée
+
+           $table->string('username'); // Ajout du champ username
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

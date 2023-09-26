@@ -118,8 +118,8 @@
                                                     <td class="px-4 py-4">{{ $history->title }}</td>
                                                     {{-- <td class="px-4 py-4">{{ $history->author }}</td> --}}
                                                     <td class="px-4 py-4">
-                                                        @if ($history->image)
-                                                            <img src="{{ asset('storage/' . $history->image) }}"
+                                                        @if ($history->image_compressed)
+                                                            <img src="{{ asset('storage/' . $history->image_compressed) }}"
                                                                 alt="{{ $history->title }}"
                                                                 class="w-12 h-12 object-cover rounded-full">
                                                         @else

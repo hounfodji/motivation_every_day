@@ -37,8 +37,8 @@
                 </div>
                 <!-- Colonne de droite pour l'image -->
                 <div class="w-1/3">
-                    @if ($history->image)
-                        <img src="{{ asset('storage/' . $history->image) }}" alt="Image" class="max-w-full h-auto">
+                    @if ($history->image_real)
+                        <img src="{{ asset('storage/' . $history->image_real) }}" alt="Image" class="max-w-full h-auto">
                     @else
                         Aucune image
                     @endif

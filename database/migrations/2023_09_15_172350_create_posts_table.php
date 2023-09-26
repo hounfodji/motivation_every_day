@@ -16,10 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->text('detail');
+            $table->string('author'); // Ajout du champ author
            // $table->boolean('state')->default(false);
             $table->string('image_real'); // Ajout du champ pour l'image réelle
             $table->string('image_compressed'); // Ajout du champ pour l'image compressée
-            $table->string('author'); // Ajout du champ author
             $table->string('username'); // Ajout du champ username
 
             $table->unsignedBigInteger('user_id');

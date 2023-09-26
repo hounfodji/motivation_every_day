@@ -35,45 +35,47 @@ class HistoryController extends Controller
         $data = $request->validate([
             'title' => 'required|max:100',
             'author' => 'required|max:100',
-            'detail' => 'required|max:20000',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
+            'detail' => 'required|max:500',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024', // Vérification de l'image
         ]);
+        
 
-         // Gestion de l'image
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('history_images', 'public');
+        // Obtenez le fichier téléchargé
+        $uploadedFile = $request->file('image');
 
-        // Chemin complet de l'image téléchargée
-        $imageFullPath = storage_path('app/public/' . $imagePath);
+        // Générez un nom de fichier unique en utilisant le nom d'origine 
+        $fileName = $uploadedFile->getClientOriginalName();
 
-        // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-        $image = Image::make($imageFullPath)->fit(1110, 600, function ($constraint) {
-            $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
-        });
+        // Chemin pour stocker l'image réelle avec le nom généré
+        $realImagePath = $uploadedFile->storeAs('history_images/real', $fileName, 'public');
 
-        // Sauvegardez l'image redimensionnée et compressée
-        $image->save($imageFullPath);
-    } else {
-        $imagePath = null;
-    }
+        // Chemin complet de l'image réelle téléchargée
+        $realImageFullPath = storage_path('app/public/' . $realImagePath);
 
+        // Chemin pour stocker l'image compressée et redimensionnée
+        $compressedImagePath = 'history_images/compressed/' . $request->file('image')->getClientOriginalName();
 
+        // Redimensionnez et compressez l'image
+        Image::make($realImageFullPath)
+            ->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 442x249
+            })
+            ->save(storage_path('app/public/' . $compressedImagePath));
 
         $user = Auth::user(); // Utilisateur actuellement authentifié
         $history = new History([
             'title' => $request->title,
             'detail' => $request->detail,
             'author' => $request->author,
-            // 'state' => false, // Vous pouvez définir l'état par défaut ici
             'user_id' => $user->id,
-            'image' => $imagePath, // Enregistrez le chemin de l'image
-            'username' => $user->name, // Remplacez 'author' par le nom de l'auteur approprié
+            'image_real' => $realImagePath, // Enregistrez le chemin de l'image réelle 
+            'image_compressed' => $compressedImagePath, // Enregistrez le chemin de l'image compressée et redimensionnée
+            'username' => $user->name,
         ]);
 
         $history->save();
-        //  dd($history);
+
         return redirect('/dashboard');
-        // return back()->with('message', "Le post a bien été créé !");
     }
 
     /**
@@ -96,46 +98,60 @@ class HistoryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, History $history)
-    {
-        $data = $request->validate([
-            'title' => 'required|max:100',
-            'author' => 'required|max:100',
-            'detail' => 'required|max:20000',
-        ]);
+{
+    $data = $request->validate([
+        'title' => 'required|max:100',
+        'author' => 'required|max:100',
+        'detail' => 'required|max:500',
+    ]);
 
-        // Gestion de l'image (mise à jour)
-        if ($request->hasFile('image')) {
-            // Supprimez l'ancienne image si elle existe
-            if ($history->image) {
-                Storage::disk('public')->delete($history->image);
-            }
-
-            $imagePath = $request->file('image')->store('history_images', 'public');
-    
-            // Chemin complet de l'image téléchargée
-            $imageFullPath = storage_path('app/public/' . $imagePath);
-    
-            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-            $image = Image::make($imageFullPath)->fit(1110, 600, function ($constraint) {
-                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
-            });
-    
-            // Sauvegardez l'image redimensionnée et compressée
-            $image->save($imageFullPath);
-        } 
-        else {
-            $imagePath = $history->image; // Conservez l'ancien chemin de l'image
+    if ($request->hasFile('image_real')) {
+        // Supprimez l'ancienne image réelle et son image compressée associée s'ils existent
+        if ($history->image_real) {
+            Storage::disk('public')->delete($history->image_real);
         }
 
+        if ($history->image_compressed) {
+            Storage::disk('public')->delete($history->image_compressed);
+        }
+
+        // Obtenez le fichier téléchargé
+        $uploadedFile = $request->file('image_real');
+
+        // Générez un nom de fichier unique en utilisant le nom d'origine 
+        $fileName = $uploadedFile->getClientOriginalName();
+
+        // Chemin pour stocker l'image réelle avec le nom généré
+        $realImagePath = $uploadedFile->storeAs('history_images/real', $fileName, 'public');
+
+        // Chemin complet de l'image réelle téléchargée
+        $realImageFullPath = storage_path('app/public/' . $realImagePath);
+
+        // Compresser l'image réelle
+        $compressedImagePath = 'history_images/compressed/' . $fileName;
+        Image::make($realImageFullPath)
+            ->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 442x249
+            })
+            ->save(storage_path('app/public/' . $compressedImagePath));
+
+        // Mettez à jour les chemins des images dans la base de données
         $history->title = $request->title;
         $history->detail = $request->detail;
         $history->author = $request->author;
-        // $history->state = $request->has('state');
-        $history->image = $imagePath; // Mettez à jour le chemin de l'image
+        $history->image_real = $realImagePath;
+        $history->image_compressed = $compressedImagePath;
         $history->save();
-        return redirect('/dashboard');
-        //return back()->with('message', "Le post a bien été modifié !!");
+    } else {
+        // Si aucune nouvelle image réelle n'a été fournie, mettez à jour les autres données du history
+        $history->title = $request->title;
+        $history->detail = $request->detail;
+        $history->author = $request->author;
+        $history->save();
     }
+
+    return redirect('/dashboard');
+}
 
     /**
      * Remove the specified resource from storage.
