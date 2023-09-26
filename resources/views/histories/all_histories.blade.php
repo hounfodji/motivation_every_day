@@ -44,7 +44,7 @@ https://templatemo.com/tm-551-stand-blog
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Meday<em>.</em></h2></a>
+          <a class="navbar-brand" href="{{ url('/') }}"><h2>Meday<em>.</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -125,8 +125,8 @@ https://templatemo.com/tm-551-stand-blog
                   <div class="col-lg-6">
                     <div class="blog-post">
                       <div class="blog-thumb">
-                        @if($history->image)
-                          <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}" class="w-12 h-12 object-cover rounded-full">
+                        @if($history->image_compressed)
+                          <img src="{{ asset('storage/' . $history->image_compressed) }}" alt="{{ $history->title }}" class="w-12 h-12 object-cover rounded-full">
                         @else
                             <span class="text-gray-400">Aucune image</span>
                         @endif
