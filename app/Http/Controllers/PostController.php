@@ -45,52 +45,46 @@ class PostController extends Controller
             'title' => 'required|max:100',
             'author' => 'required|max:100',
             'detail' => 'required|max:500',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024', // Vérification de l'image
         ]);
+        
 
-        // Gestion de l'image
-        // if ($request->hasFile('image')) {
+        // Obtenez le fichier téléchargé
+        $uploadedFile = $request->file('image');
 
-        //     $imagePath = $request->file('image')->store('post_images', 'public');
-        // } else {
-        //     $imagePath = null;
-        // }
+        // Générez un nom de fichier unique en utilisant le nom d'origine 
+        $fileName = $uploadedFile->getClientOriginalName();
 
-        // Gestion de l'image
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('post_images', 'public');
+        // Chemin pour stocker l'image réelle avec le nom généré
+        $realImagePath = $uploadedFile->storeAs('post_images/real', $fileName, 'public');
 
-            // Chemin complet de l'image téléchargée
-            $imageFullPath = storage_path('app/public/' . $imagePath);
+        // Chemin complet de l'image réelle téléchargée
+        $realImageFullPath = storage_path('app/public/' . $realImagePath);
 
-            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
-                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
-            });
+        // Chemin pour stocker l'image compressée et redimensionnée
+        $compressedImagePath = 'post_images/compressed/' . $request->file('image')->getClientOriginalName();
 
-            // Sauvegardez l'image redimensionnée et compressée
-            $image->save($imageFullPath);
-        } else {
-            $imagePath = null;
-        }
-
-
+        // Redimensionnez et compressez l'image
+        Image::make($realImageFullPath)
+            ->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 442x249
+            })
+            ->save(storage_path('app/public/' . $compressedImagePath));
 
         $user = Auth::user(); // Utilisateur actuellement authentifié
         $post = new Post([
             'title' => $request->title,
             'detail' => $request->detail,
             'author' => $request->author,
-            // 'state' => false, // Vous pouvez définir l'état par défaut ici
             'user_id' => $user->id,
-            'image' => $imagePath, // Enregistrez le chemin de l'image
-            'username' => $user->name, // Remplacez 'author' par le nom de l'auteur approprié
+            'image_real' => $realImagePath, // Enregistrez le chemin de l'image réelle 
+            'image_compressed' => $compressedImagePath, // Enregistrez le chemin de l'image compressée et redimensionnée
+            'username' => $user->name,
         ]);
 
         $post->save();
-        // dd($post);
+
         return redirect('/dashboard');
-        // return back()->with('message', "Le post a bien été créé !");
     }
 
     /**
@@ -113,53 +107,63 @@ class PostController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
-    {
-        $data = $request->validate([
-            'title' => 'required|max:100',
-            'author' => 'required|max:100',
-            'detail' => 'required|max:500',
-        ]);
+{
+    $data = $request->validate([
+        'title' => 'required|max:100',
+        'author' => 'required|max:100',
+        'detail' => 'required|max:500',
+    ]);
 
-        // Gestion de l'image (mise à jour)
-        // if ($request->hasFile('image')) {
-        // // Supprimez l'ancienne image si elle existe
-        // if ($post->image) {
-        //     Storage::disk('public')->delete($post->image);
-        // }
-
-        //     $imagePath = $request->file('image')->store('post_images', 'public');
-        // } 
-        if ($request->hasFile('image')) {
-            // Supprimez l'ancienne image si elle existe
-            if ($post->image) {
-                Storage::disk('public')->delete($post->image);
-            }
-
-            $imagePath = $request->file('image')->store('post_images', 'public');
-
-            // Chemin complet de l'image téléchargée
-            $imageFullPath = storage_path('app/public/' . $imagePath);
-
-            // Redimensionnez et compressez l'image à une taille maximale de 800x800 pixels
-            $image = Image::make($imageFullPath)->fit(442, 249, function ($constraint) {
-                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 800x800
-            });
-
-            // Sauvegardez l'image redimensionnée et compressée
-            $image->save($imageFullPath);
-        } else {
-            $imagePath = $post->image; // Conservez l'ancien chemin de l'image
+    if ($request->hasFile('image_real')) {
+        // Supprimez l'ancienne image réelle et son image compressée associée s'ils existent
+        if ($post->image_real) {
+            Storage::disk('public')->delete($post->image_real);
         }
 
+        if ($post->image_compressed) {
+            Storage::disk('public')->delete($post->image_compressed);
+        }
+
+        // Obtenez le fichier téléchargé
+        $uploadedFile = $request->file('image_real');
+
+        // Générez un nom de fichier unique en utilisant le nom d'origine 
+        $fileName = $uploadedFile->getClientOriginalName();
+
+        // Chemin pour stocker l'image réelle avec le nom généré
+        $realImagePath = $uploadedFile->storeAs('post_images/real', $fileName, 'public');
+
+        // Chemin complet de l'image réelle téléchargée
+        $realImageFullPath = storage_path('app/public/' . $realImagePath);
+
+        // Compresser l'image réelle
+        $compressedImagePath = 'post_images/compressed/' . $fileName;
+        Image::make($realImageFullPath)
+            ->fit(442, 249, function ($constraint) {
+                $constraint->upsize(); // Redimensionnez uniquement si l'image est plus grande que 442x249
+            })
+            ->save(storage_path('app/public/' . $compressedImagePath));
+
+        // Mettez à jour les chemins des images dans la base de données
         $post->title = $request->title;
         $post->detail = $request->detail;
         $post->author = $request->author;
-        // $post->state = $request->has('state');
-        $post->image = $imagePath; // Mettez à jour le chemin de l'image
+        $post->image_real = $realImagePath;
+        $post->image_compressed = $compressedImagePath;
         $post->save();
-        return redirect('/dashboard');
-        //return back()->with('message', "Le post a bien été modifié !!");
+    } else {
+        // Si aucune nouvelle image réelle n'a été fournie, mettez à jour les autres données du post
+        $post->title = $request->title;
+        $post->detail = $request->detail;
+        $post->author = $request->author;
+        $post->save();
     }
+
+    return redirect('/dashboard');
+}
+
+
+
 
     /**
      * Remove the specified resource from storage.

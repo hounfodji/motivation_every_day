@@ -50,8 +50,8 @@
                                                     {{-- <td class="px-4 py-4">{{ $post->author }}</td> --}}
                                                     {{-- <td class="px-4 py-4">@if ($post->state) {{ __('Done') }} @else {{ __('To do') }} @endif</td> --}}
                                                     <td class="px-4 py-4">
-                                                        @if ($post->image)
-                                                            <img src="{{ asset('storage/' . $post->image) }}"
+                                                        @if ($post->image_compressed)
+                                                            <img src="{{ asset('storage/' . $post->image_compressed) }}"
                                                                 alt="{{ $post->title }}"
                                                                 class="w-12 h-12 object-cover rounded-full">
                                                         @else

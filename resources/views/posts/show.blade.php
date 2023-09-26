@@ -38,8 +38,8 @@
                 </div>
                 <!-- Colonne de droite pour l'image -->
                 <div class="w-1/3">
-                    @if ($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="Image" class="max-w-full h-auto">
+                    @if ($post->image_real)
+                        <img src="{{ asset('storage/' . $post->image_real) }}" alt="Image" class="max-w-full h-auto">
                     @else
                         Aucune image
                     @endif

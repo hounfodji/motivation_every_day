@@ -15,7 +15,8 @@ class Post extends Model
         'detail',
         //'state',
         'user_id',
-        'image', // Ajout du champ image
+        'image_real', // Ajout du champ pour l'image réelle
+        'image_compressed', // Ajout du champ pour l'image compressée
         'author', // Ajout du champ author
         'username', // Ajout du champ username
         // Autres colonnes si nécessaire

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="TemplateMo">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
 
     <title>Meday</title>
 
@@ -19,16 +21,53 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-stand-blog.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-<!--
+    <!--
 
 TemplateMo 551 Stand Blog
 
 https://templatemo.com/tm-551-stand-blog
 
 -->
-  </head>
+    <style>
+        .card {
+            flex-direction: row;
+        }
 
-  <body>
+        ul.post-info li {
+            display: inline-block;
+            margin-right: 8px;
+            margin-right: 3px;
+        }
+
+        ul.post-info li:after {
+            content: '|';
+            color: #aaa;
+            margin-left: 8px;
+        }
+
+
+        ul.post-info li:after {
+            margin-left: 5px;
+        }
+
+        ul.post-info li:last-child::after {
+            display: none;
+        }
+
+        ul.post-info li a {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: 400;
+            transition: all .3s;
+        }
+
+        ul.post-info li a:hover {
+            color: #f48840;
+        }
+    </style>
+</head>
+
+<body>
 
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
@@ -37,88 +76,94 @@ https://templatemo.com/tm-551-stand-blog
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <!-- Header -->
     <header class="">
-      <nav class="navbar navbar-expand-lg ">
-        <div class="container">
-          <a class="navbar-brand" href="{{ url('/') }}"><h2>Meday<em>.</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url('/') }}">Accueil
-                  <span class="sr-only">(current)</span>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <h2>Meday<em>.</em></h2>
                 </a>
-              </li> 
-              {{-- <li class="nav-item">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/') }}">Accueil
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
                 <a class="nav-link" href="about.html">About Us</a>
               </li> --}}
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url('/histories') }}">Autres histoires</a>
-              </li>
-              {{-- <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/histories') }}">Autres histoires</a>
+                        </li>
+                        {{-- <li class="nav-item">
                 <a class="nav-link" href="post-details.html">Post Details</a>
               </li> --}}
-              {{-- <li class="nav-item">
+                        {{-- <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
               </li> --}}
-              @if (Route::has('login'))
-                {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                    </li>    
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-                    </li>
+                        @if (Route::has('login'))
+                            {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
+                            @auth
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/dashboard') }}"
+                                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}"
+                                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                                        in</a>
+                                </li>
 
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        </li>
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}"
+                                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                                    </li>
+                                @endif
+                            @endauth
+                            {{-- </div> --}}
                         @endif
-                    @endauth
-                {{-- </div> --}}
-            @endif
-            </ul>
-          </div>
-        </div>
-      </nav>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    
+
 
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="main-banner header-text">
-      <div class="container-fluid">
-        {{-- <div class="alert alert-secondary" role="alert">
+        <div class="container-fluid">
+            {{-- <div class="alert alert-secondary" role="alert">
           A simple secondary alert—check it out!
         </div> --}}
-        <div class="owl-banner owl-carousel">
+            <div class="owl-banner owl-carousel">
 
-          @foreach ($posts as $post)
+                @foreach ($posts as $post)
+                    <div class="item">
+                        @if ($post->image_compressed)
+                            <img src="{{ asset('storage/' . $post->image_compressed) }}" alt="{{ $post->title }}"
+                                class="w-full h-auto object-cover">
+                        @else
+                            <span class="text-gray-400">Aucune image</span>
+                        @endif
+                        <div class="item-content">
+                            <div class="main-content">
+                                <h4>{{ $post->detail }}</h4>
+                                <p class="fst-italic" style="color: #f48840">{{ $post->author }} in {{ $post->title }}
+                                    .</p>
 
-           
-            
-            <div class="item">
-              @if($post->image)
-                  <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-12 h-12 object-cover rounded-full">
-              @else
-                  <span class="text-gray-400">Aucune image</span>
-              @endif
-              <div class="item-content">
-                <div class="main-content">
-                  <h4>{{ $post->detail }}</h4>
-                  <p class="fst-italic" style="color: #f48840">{{ $post->author }} in {{ $post->title }} .</p>
-                  
-                  {{-- <div class="meta-category">
+                                {{-- <div class="meta-category">
                     <span>{{ $post->author }} in {{ $post->title }}</span>
                   </div>
                   <ul class="post-info">
@@ -126,17 +171,18 @@ https://templatemo.com/tm-551-stand-blog
                     <li><a href="#">{{ $post->created_at }}</a></li>
                     <li><a href="#">12 Comments</a></li>
                   </ul> --}}
-                </div>
-              </div>
-            </div>
-          @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
 
+
+            </div>
         </div>
-      </div>
     </div>
     <!-- Banner Ends Here -->
 
-    
+
 
     {{-- <section class="call-to-action">
       <div class="container">
@@ -161,255 +207,95 @@ https://templatemo.com/tm-551-stand-blog
     </section> --}}
 
     <section class="call-to-action">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="main-content">
-              <div class="row">
-                <div class="col-lg-8">
-                  <span>Motivation Every Day</span>
-                  <h4>History of the day!</h4>
-                </div>
-                {{-- <div class="col-lg-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-content">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <span>Motivation Every Day</span>
+                                <h4>History of the day!</h4>
+                            </div>
+                            {{-- <div class="col-lg-4">
                   <div class="main-button">
                     <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
                   </div>
                 </div> --}}
-              </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
-    @if($history != null)
-    <section class="blog-posts">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="all-blog-posts">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      @if($history->image)
-                          <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}" class="w-12 h-12 object-cover rounded-full">
-                      @else
-                          <span class="text-gray-400">Aucune image</span>
-                      @endif
+
+
+
+
+    @if ($history != null)
+        <section class="blog-posts">
+            <div class="container">
+
+                <div class="card" style="width: 100%">
+                    <div class="col-4">
+
+                        @if ($history->image)
+                            <img src="{{ asset('storage/' . $history->image) }}" alt="{{ $history->title }}"
+                                class="mt-5 rounded mx-auto d-block">
+                        @else
+                            <span class="text-gray-400">Aucune image</span>
+                        @endif
                     </div>
-                    <div class="down-content">
-                      <span>{{ $history->title }}</span>
-                      {{-- <a href="post-details.html"><h4>Best Template Website for HTML CSS</h4></a> --}}
-                      <ul class="post-info">
-                        <li><a href="#">{{ $history->username }}</a></li>
-                        <li><a href="#">{{ $history->created_at }}</a></li>
-                        <li><a href="#">12 Comments</a></li>
-                      </ul>
-                      <p>{{ $history->detail }} <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">Contact TemplateMo</a> for more info. Thank you.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Beauty</a>,</li>
-                              <li><a href="#">Nature</a></li>
+                    <div class="card-body col-8">
+                        <h2 class="card-title" style="color: #f48840">{{ $history->title }}</h5>
+                            <p class=" text-break">{{ $history->detail }}</p>
+                            <ul class="post-info mt-3">
+                                <li><a href="#">{{ $history->username }}</a></li>
+                                <li><a href="#">{{ $history->created_at }}</a></li>
+                                <li><a href="#">12 Comments</a></li>
                             </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#"> Twitter</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+                            {{-- <a href="{{ url('/histories') }}" class="btn btn-primary">View all posts</a> --}}
                     </div>
-                  </div>
                 </div>
-                {{-- <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-post-02.jpg" alt="">
+              
+                <div class="mt-5 mx-auto col-9">
+                    <div class="main-button">
+                        <a href="{{ url('/histories') }}">View All Posts</a>
                     </div>
-                    <div class="down-content">
-                      <span>Healthy</span>
-                      <a href="post-details.html"><h4>Etiam id diam vitae lorem dictum</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 24, 2020</a></li>
-                        <li><a href="#">36 Comments</a></li>
-                      </ul>
-                      <p>You can support us by contributing a little via PayPal. Please contact <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">TemplateMo</a> via Live Chat or Email. If you have any question or feedback about this template, feel free to talk to us. Also, you may check other CSS templates such as <a rel="nofollow" href="https://templatemo.com/tag/multi-page" target="_parent">multi-page</a>, <a rel="nofollow" href="https://templatemo.com/tag/resume" target="_parent">resume</a>, <a rel="nofollow" href="https://templatemo.com/tag/video" target="_parent">video</a>, etc.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">Best Templates</a>,</li>
-                              <li><a href="#">TemplateMo</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
-                {{-- <div class="col-lg-12">
-                  <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img src="assets/images/blog-post-03.jpg" alt="">
-                    </div>
-                    <div class="down-content">
-                      <span>Fashion</span>
-                      <a href="post-details.html"><h4>Donec tincidunt leo nec magna</h4></a>
-                      <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">May 14, 2020</a></li>
-                        <li><a href="#">48 Comments</a></li>
-                      </ul>
-                      <p>Nullam at quam ut lacus aliquam tempor vel sed ipsum. Donec pellentesque tincidunt imperdiet. Mauris sit amet justo vulputate, cursus massa congue, vestibulum odio. Aenean elit nunc, gravida in erat sit amet, feugiat viverra leo. Phasellus interdum, diam commodo egestas rhoncus, turpis nisi consectetur nibh, in vehicula eros orci vel neque.</p>
-                      <div class="post-options">
-                        <div class="row">
-                          <div class="col-6">
-                            <ul class="post-tags">
-                              <li><i class="fa fa-tags"></i></li>
-                              <li><a href="#">HTML CSS</a>,</li>
-                              <li><a href="#">Photoshop</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-6">
-                            <ul class="post-share">
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#">Twitter</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
-                <div class="col-lg-12">
-                  <div class="main-button">
-                    <a href="blog.html">View All Posts</a>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
-          {{-- <div class="col-lg-4">
-            <div class="sidebar">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="sidebar-item search">
-                    <form id="search_form" name="gs" method="GET" action="#">
-                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
-                    </form>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item recent-posts">
-                    <div class="sidebar-heading">
-                      <h2>Recent Posts</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="post-details.html">
-                          <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                          <span>May 31, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                          <span>May 28, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                          <span>May 14, 2020</span>
-                        </a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item categories">
-                    <div class="sidebar-heading">
-                      <h2>Categories</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item tags">
-                    <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
-        </div>
-      </div>
-    </section>
+        </section>
     @else
         <span class="text-gray-400">No history</span>
     @endif
 
 
-    
 
-    
 
-    
+
+
+
     <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <ul class="social-icons">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Behance</a></li>
-              <li><a href="#">Linkedin</a></li>
-              <li><a href="#">Dribbble</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-12">
-            <div class="copyright-text">
-              <p>Copyright 2020 Stand Blog Co.
-                    
-                 | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="social-icons">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Behance</a></li>
+                        <li><a href="#">Linkedin</a></li>
+                        <li><a href="#">Dribbble</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="copyright-text">
+                        <p>Copyright 2020 Stand Blog Co.
+
+                            | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a>
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </footer>
 
     <!-- Bootstrap core JavaScript -->
@@ -423,16 +309,17 @@ https://templatemo.com/tm-551-stand-blog
     <script src="assets/js/isotope.js"></script>
     <script src="assets/js/accordions.js"></script>
 
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
+    <script language="text/Javascript">
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) { //declaring the array outside of the
+            if (!cleared[t.id]) { // function makes it static and global
+                cleared[t.id] = 1; // you could use true and false, but that's more typing
+                t.value = ''; // with more chance of typos
+                t.style.color = '#fff';
+            }
+        }
     </script>
 
-  </body>
+</body>
+
 </html>

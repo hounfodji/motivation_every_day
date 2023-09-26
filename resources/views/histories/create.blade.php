@@ -39,7 +39,7 @@
             <div class="mt-4">
                 <x-input-label for="author" :value="__('Author')" />
 
-                <x-textarea class="block mt-1 w-full" id="author" name="author">{{ old('author') }}</x-textarea>
+                <x-text-input  id="author" class="block mt-1 w-full" type="text" name="author" :value="old('author')" required autofocus />
 
                 <x-input-error :messages="$errors->get('author')" class="mt-2" />
             </div>

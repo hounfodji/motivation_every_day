@@ -35,7 +35,7 @@ class HistoryController extends Controller
         $data = $request->validate([
             'title' => 'required|max:100',
             'author' => 'required|max:100',
-            'detail' => 'required|max:500',
+            'detail' => 'required|max:20000',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Vérification de l'image
         ]);
 
@@ -100,7 +100,7 @@ class HistoryController extends Controller
         $data = $request->validate([
             'title' => 'required|max:100',
             'author' => 'required|max:100',
-            'detail' => 'required|max:500',
+            'detail' => 'required|max:20000',
         ]);
 
         // Gestion de l'image (mise à jour)

@@ -16,29 +16,28 @@
                     <h3 class="text-2xl font-semibold text-gray-800 mb-4">@lang('Title')</h3>
                     <p class="text-lg text-gray-700">{{ $history->title }}</p>
 
-                    <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Detail')</h3>
-                    <p class="text-lg text-gray-700">{{ $history->detail }}</p>
 
-                    {{-- <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('State')</h3>
-                    <p class="text-lg text-gray-700">
-                        @if($history->state)
-                            La tâche a été accomplie !
-                        @else
-                            La tâche n'a pas encore été accomplie.
-                        @endif
-                    </p> --}}
+
+                    <div style="overflow: auto">
+
+                        <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Detail')</h3>
+                        <p class="text-lg text-gray-700">{{ $history->detail }}</p>
+
+                    </div>
+
+
 
                     <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Date creation')</h3>
                     <p class="text-lg text-gray-700">{{ $history->created_at->format('d/m/Y') }}</p>
 
-                    @if($history->created_at != $history->updated_at)
+                    @if ($history->created_at != $history->updated_at)
                         <h3 class="text-2xl font-semibold text-gray-800 mt-6">@lang('Last update')</h3>
                         <p class="text-lg text-gray-700">{{ $history->updated_at->format('d/m/Y') }}</p>
                     @endif
                 </div>
                 <!-- Colonne de droite pour l'image -->
                 <div class="w-1/3">
-                    @if($history->image)
+                    @if ($history->image)
                         <img src="{{ asset('storage/' . $history->image) }}" alt="Image" class="max-w-full h-auto">
                     @else
                         Aucune image
