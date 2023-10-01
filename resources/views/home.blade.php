@@ -97,41 +97,48 @@ https://templatemo.com/tm-551-stand-blog
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li> --}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/histories') }}">Autres histoires</a>
-                        </li>
-                        {{-- <li class="nav-item">
-                <a class="nav-link" href="post-details.html">Post Details</a>
-              </li> --}}
-                        {{-- <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li> --}}
-                        @if (Route::has('login'))
-                            {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
-                            @auth
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/dashboard') }}"
-                                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                                </li>
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}"
-                                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                                        in</a>
-                                </li>
 
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}"
-                                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                                    </li>
-                                @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/histories') }}">Citations</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/histories') }}">Histoires</a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                            @auth
+                                <a class="nav-link dropdown-toggle" type="button" id="loginRegisterDropdown"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dashboard/Logout
+                                </a>
+                            @else
+                                <a class="nav-link dropdown-toggle" type="button" id="loginRegisterDropdown"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Login/Register
+                                </a>
                             @endauth
-                            {{-- </div> --}}
-                        @endif
+                            <ul class="dropdown-menu" aria-labelledby="loginRegisterDropdown">
+                                @auth
+                                    <!-- Si l'utilisateur est connecté, affichez un lien vers le tableau de bord et un lien de déconnexion -->
+                                    <li><a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a></li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
+                                @else
+                                    <!-- Si l'utilisateur n'est pas connecté, affichez des liens vers Login et Register -->
+                                    <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+                                    @if (Route::has('register'))
+                                        <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                                    @endif
+                                @endauth
+                            </ul>
+
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -160,7 +167,8 @@ https://templatemo.com/tm-551-stand-blog
                         <div class="item-content">
                             <div class="main-content">
                                 <h4>{{ $post->detail }}</h4>
-                                <p class="fst-italic" style="color: #f48840">{{ $post->author }} in {{ $post->title }}
+                                <p class="fst-italic" style="color: #f48840">{{ $post->author }} in
+                                    {{ $post->title }}
                                     .</p>
 
                                 {{-- <div class="meta-category">
@@ -239,8 +247,8 @@ https://templatemo.com/tm-551-stand-blog
                     <div class="col-5">
 
                         @if ($history->image_compressed)
-                            <img src="{{ asset('storage/' . $history->image_compressed) }}" alt="{{ $history->title }}"
-                                class="mt-5 rounded mx-auto d-block">
+                            <img src="{{ asset('storage/' . $history->image_compressed) }}"
+                                alt="{{ $history->title }}" class="mt-5 rounded mx-auto d-block">
                         @else
                             <span class="text-gray-400">Aucune image</span>
                         @endif
@@ -256,7 +264,7 @@ https://templatemo.com/tm-551-stand-blog
                             {{-- <a href="{{ url('/histories') }}" class="btn btn-primary">View all posts</a> --}}
                     </div>
                 </div>
-              
+
                 <div class="mt-5 mx-auto col-7">
                     <div class="main-button">
                         <a href="{{ url('/histories') }}">View All Posts</a>
