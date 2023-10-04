@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Meday</title>
 
     <!-- Bootstrap core CSS -->
@@ -107,43 +107,263 @@ https://templatemo.com/tm-551-stand-blog
                         </li>
 
 
-                        <li class="nav-item dropdown">
+                        @if (Route::has('login'))
+                            {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
                             @auth
-                                <a class="nav-link dropdown-toggle" type="button" id="loginRegisterDropdown"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dashboard/Logout
-                                </a>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/dashboard') }}"
+                                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                                </li>
                             @else
-                                <a class="nav-link dropdown-toggle" type="button" id="loginRegisterDropdown"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Login/Register
-                                </a>
-                            @endauth
-                            <ul class="dropdown-menu" aria-labelledby="loginRegisterDropdown">
-                                @auth
-                                    <!-- Si l'utilisateur est connecté, affichez un lien vers le tableau de bord et un lien de déconnexion -->
-                                    <li><a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a></li>
-                                    <li>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="dropdown-item">Logout</button>
-                                        </form>
+                                <li class="nav-item">
+                                    {{-- <a class="nav-link" href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a> --}}
+                                    <a class="nav-link" style="cursor: pointer" data-toggle="modal"
+                                        data-target="#loginModal">{{ __('Login') }}</a>
+                                </li>
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        {{-- <a class="nav-link" href="{{ route('register') }}"
+                                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a> --}}
+                                        <a class="nav-link" style="cursor: pointer" data-toggle="modal"
+                                            data-target="#registerModal">{{ __('Register') }}</a>
                                     </li>
-                                @else
-                                    <!-- Si l'utilisateur n'est pas connecté, affichez des liens vers Login et Register -->
-                                    <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
-                                    @if (Route::has('register'))
-                                        <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
-                                    @endif
-                                @endauth
-                            </ul>
-
-                        </li>
+                                @endif
+                            @endauth
+                            {{-- </div> --}}
+                        @endif
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    {{-- Login Modal --}}
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 90px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModal" style="color: #f48840">{{ __('Login') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="email"
+                                class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                        {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
+
+                                @if (Route::has('password.request'))
+                                    {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a> --}}
+                                    <a class="btn btn-link" style="cursor: pointer" data-toggle="modal"
+                                        data-target="#forgotPasswordModal">{{ __('Forgot Your Password?') }}</a>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Forgot Password Modal --}}
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 90px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModal" style="color: #f48840">{{ __('Forget Your Password') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+                        <div class="mb-4 text-sm text-gray-600">
+                            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+                        </div>
+                        <div class="form-group row">
+                            <label for="email"
+                                class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary" id="toastBut">
+                                    {{ __('Email Password Reset Link') }}
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Toast --}}
+    {{-- <input type="hidden" id="myHiddenInput" value=""> --}}
+
+
+
+    {{-- Register Modal --}}
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 90px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModal" style="color: #f48840">{{ __('Register') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('register') }}" id="registerForm">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="nameInput"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="nameInput" type="text" class="form-control" name="name"
+                                    value="{{ old('name') }}" autocomplete="name" autofocus>
+
+                                <span class="invalid-feedback" role="alert" id="nameError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="emailInput"
+                                class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="emailInput" type="email" class="form-control" name="email"
+                                    value="{{ old('email') }}" required autocomplete="email">
+
+                                <span class="invalid-feedback" role="alert" id="emailError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="passwordInput"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="passwordInput" type="password" class="form-control" name="password"
+                                    required autocomplete="new-password">
+
+                                <span class="invalid-feedback" role="alert" id="passwordError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password-confirm"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                                    {{ __('Already registered?') }}
+                                </a> --}}
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 
@@ -309,6 +529,7 @@ https://templatemo.com/tm-551-stand-blog
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <!-- Additional Scripts -->
     <script src="assets/js/custom.js"></script>
@@ -316,6 +537,72 @@ https://templatemo.com/tm-551-stand-blog
     <script src="assets/js/slick.js"></script>
     <script src="assets/js/isotope.js"></script>
     <script src="assets/js/accordions.js"></script>
+    {{-- <script src="assets/js/loginRegisterModal.js"></script> --}}
+
+    {{-- Login Submit and Validation Errors --}}
+    @parent
+    @if ($errors->has('email') || $errors->has('password'))
+        <script>
+            $(function() {
+                $('#loginModal').modal({
+                    show: true
+                });
+            });
+        </script>
+    @endif
+
+    {{-- Register AJAX Submit and Validation Errors --}}
+    @parent
+
+    <script>
+        $(function() {
+            $('#registerForm').submit(function(e) {
+                e.preventDefault();
+                let formData = $(this).serializeArray();
+                $(".invalid-feedback").children("strong").text("");
+                $("#registerForm input").removeClass("is-invalid");
+                $.ajax({
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json"
+                    },
+                    url: "{{ route('register') }}",
+                    data: formData,
+                    success: () => window.location.assign("{{ route('home') }}"),
+                    error: (response) => {
+                        if (response.status === 422) {
+                            let errors = response.responseJSON.errors;
+                            Object.keys(errors).forEach(function(key) {
+                                $("#" + key + "Input").addClass("is-invalid");
+                                $("#" + key + "Error").children("strong").text(errors[
+                                    key][0]);
+                            });
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                })
+            });
+        })
+    </script>
+
+    @if ($status = 'passwords.sent')
+        <script>
+            Toastify({
+                text: "We sent an email.",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function() {}
+            }).showToast();
+        </script>
+    @endif
 
     <script language="text/Javascript">
         cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
@@ -326,7 +613,43 @@ https://templatemo.com/tm-551-stand-blog
                 t.style.color = '#fff';
             }
         }
+
+        // toast
+        // Sélectionnez l'input caché et le bouton
+        // var hiddenInput = document.getElementById('myHiddenInput');
+        // var toastBut = document.getElementById('toastBut');
+
+        // // Ajoutez un gestionnaire d'événement au bouton
+        // toastBut.addEventListener('click', function () {
+        //     // if (hiddenInput.value === '1') {
+        //         hiddenInput.value = '2';
+        //         showToast(); // Appelez la fonction pour afficher le toast
+        //     // }
+        // });
+
+        // if (hiddenInput.value === '2') {
+        //         showToast(); // Appelez la fonction pour afficher le toast
+        //     }
+
+        // // Fonction pour afficher le toast
+        // function showToast() {
+        //     Toastify({
+        //         text: "We sent an email.",
+        //         duration: 3000,
+        //         newWindow: true,
+        //         close: true,
+        //         gravity: "top",
+        //         position: "left",
+        //         stopOnFocus: true,
+        //         style: {
+        //             background: "linear-gradient(to right, #00b09b, #96c93d)",
+        //         },
+        //         onClick: function() {}
+        //     }).showToast();
+        // }
     </script>
+
+
 
 </body>
 

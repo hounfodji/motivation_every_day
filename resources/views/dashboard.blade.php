@@ -20,11 +20,11 @@
     @endif
 
     <div class="container mx-auto ">
-        <div class="flex justify-between">
-            <div class="w-1/2 ... ">
+        <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1">
+            <div class="">
                 <!-- Tableau de citations -->
-                <div class="w-1/2 pr-8">
-                    <h3 class="font-semibold text-xl text-gray-800 leading-tight">Quotes</h3>
+                <div class="w-1/2">
+                    <h3 class="font-semibold text-center text-xl text-gray-800 leading-tight">Quotes</h3>
                     <!-- Affichage des citations paginées -->
                     <div class="container flex justify-center mx-auto">
                         <div class="flex flex-col">
@@ -90,8 +90,8 @@
                 
             </div>
             
-            <div class="w-1/2">
-                <h3 class="font-semibold text-xl text-gray-800 leading-tight">Histories</h3>
+            <div class="">
+                <h3 class="font-semibold text-center text-xl text-gray-800 leading-tight">Histories</h3>
                 <!-- Affichage des histoires paginées -->
                 <div class="container flex justify-center mx-auto">
                     <div class="flex flex-col">
